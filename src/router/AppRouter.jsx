@@ -1,19 +1,26 @@
 import { createBrowserRouter } from 'react-router';
 import Home from '../pages/Home';
-import Favourites from '../pages/Favourites';
+import Favourite from '../pages/Favourite';
 import Games from '../pages/Games';
+import MainLayout from '../layout/MainLayout';
 
 export const router = createBrowserRouter([
   {
     path: '/',
-    element: <Home />,
-  },
-  {
-    path: '/favourites',
-    element: <Favourites />,
-  },
-  {
-    path: '/games',
-    element: <Games />,
+    element: <MainLayout />,
+    children: [
+      {
+        index: true,
+        element: <Home />,
+      },
+      {
+        path: 'favourite',
+        element: <Favourite />,
+      },
+      {
+        path: 'games',
+        element: <Games />,
+      },
+    ],
   },
 ]);
