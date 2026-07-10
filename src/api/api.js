@@ -1,11 +1,6 @@
 import axios from 'axios';
-import { API_URL, API_KEY } from '../constants/index.js';
+import { API_URL } from '../constants/index.js';
 
-const apiInstance = axios.create({
-  baseURL: `${API_URL}?key=${API_KEY}`,
+export const api = axios.create({
+  baseURL: API_URL,
 });
-
-export async function getAllGames() {
-  const response = await apiInstance.get('');
-  console.log(response);
-}

@@ -1,12 +1,9 @@
-import { useEffect } from 'react';
-import { getAllGames } from '../api/api.js';
 import CategoryTabs from '../components/CategoryTabs.jsx';
 import Card from '../components/Card.jsx';
+import { useLoaderData } from 'react-router';
 
 const Home = () => {
-  useEffect(() => {
-    getAllGames();
-  }, []);
+  const { data } = useLoaderData();
   return (
     <section>
       <div className="text-white">
@@ -24,11 +21,11 @@ const Home = () => {
       </div>
 
       <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
+        {data.results.map((item) => (
+          <div key={item.id}>
+            <Card item={item} />
+          </div>
+        ))}
       </div>
     </section>
   );
