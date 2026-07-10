@@ -1,7 +1,31 @@
 import { Search, User } from 'lucide-react';
-import { NavLink } from 'react-router';
+import { useState, useEffect } from 'react';
+import { NavLink, useSearchParams } from 'react-router';
 
 const Navbar = () => {
+  const [value, setValue] = useState('');
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setSearchParams((prev) => {
+        const params = new URLSearchParams(prev);
+        if (value) {
+          params.set('search', value);
+        } else {
+          params.delete('search');
+        }
+        params.set('page', 1);
+
+        return params;
+      });
+    }, 500);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [value]);
+
   return (
     <div className="flex items-center justify-around gap-5 border-b border-b-blue-950">
       <div id="logo" className="flex justify-center items-center gap-5">
@@ -21,7 +45,13 @@ const Navbar = () => {
       <div className="flex justify-center items-center gap-20">
         <div className="flex justify-center items-center gap-5 bg-blue-950 px-8 py-3 rounded-full">
           <Search size={20} />
-          <h3 className="text-md">Search games...</h3>
+          <input
+            type="text"
+            value={value}
+            placeholder="Search..."
+            onChange={(e) => setValue(e.target.value)}
+            className="outline-none"
+          />
         </div>
         <div id="user" className="bg-blue-950 rounded-full p-3 cursor-pointer">
           <User size={20} />
